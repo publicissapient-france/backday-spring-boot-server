@@ -38,6 +38,8 @@ public class Sender {
     @Scheduled(cron="0/10 * * * * *")
     @HystrixCommand(fallbackMethod = "displayActions")
     public void sendActions() {
+        System.out.println("Sending message...");
+
         rabbitTemplate.convertAndSend(queueName, "actions_" + UUID.randomUUID());
     }
 

@@ -21,10 +21,6 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(final String... args) throws Exception {
-        System.out.println("Waiting two seconds...");
-        Thread.sleep(2000);
-        System.out.println("Sending message...");
-
         sender.sendActions();
     }
 
