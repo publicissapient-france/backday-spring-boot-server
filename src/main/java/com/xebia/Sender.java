@@ -1,5 +1,6 @@
 package com.xebia;
 
+import java.util.Random;
 import java.util.UUID;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -20,6 +21,9 @@ public class Sender {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    ActionRepository actionRepository;
+
     @Bean
     Queue queue() {
         return new Queue(queueName, false);
@@ -35,16 +39,20 @@ public class Sender {
         return BindingBuilder.bind(queue).to(exchange).with(queueName);
     }
 
-    @Scheduled(cron="0/10 * * * * *")
+    @Scheduled(cron = "0/10 * * * * *")
     @HystrixCommand(fallbackMethod = "displayActions")
     public void sendActions() {
-        System.out.println("Sending message...");
+        Action action = new Action(UUID.randomUUID().toString(), new Random().nextLong());
+        System.out.println("Sending message : " + action);
 
-        rabbitTemplate.convertAndSend(queueName, "actions_" + UUID.randomUUID());
+        rabbitTemplate.convertAndSend(queueName, action);
     }
 
     public void displayActions() {
-        System.out.println("Default_Actions");
+        Action action = new Action(UUID.randomUUID().toString(), Math.abs(new Random().nextLong()));
+        System.out.println("Save message locally : " + action);
+
+        actionRepository.save(action);
     }
 
 

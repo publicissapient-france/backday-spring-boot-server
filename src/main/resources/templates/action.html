@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Xke-Spring-Boot</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<ul th:each="action : ${actions}">
+    <li th:text="${action.value}"/>
+</ul>
+</body>
+</html>
