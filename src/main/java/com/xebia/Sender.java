@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class Sender {
 
@@ -42,17 +40,16 @@ public class Sender {
         return BindingBuilder.bind(queue).to(exchange).with(queueName);
     }
 
-    @HystrixCommand(fallbackMethod = "defaultPublishAction")
-    public void publishAction(UUID uuid) {
-        Action action = new Action(UUID.randomUUID().toString(), new Random().nextLong());
+    @HystrixCommand(fallbackMethod = "defaultSendAction")
+    public void sendAction(Action action) {
 
         rabbitTemplate.convertAndSend(queueName, action);
         LOGGER.info("Sending message " + action);
     }
 
     @HystrixCommand
-    public void defaultPublishAction(UUID uuid) {
-        LOGGER.warn("Fallback for action " + uuid.toString());
+    public void defaultSendAction(Action action) {
+        LOGGER.warn("Fallback for action " + action);
     }
 
 
