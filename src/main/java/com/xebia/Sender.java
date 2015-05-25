@@ -1,7 +1,8 @@
 package com.xebia;
 
-import java.util.Random;
-import java.util.UUID;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -9,12 +10,14 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
+import java.util.UUID;
 
 @Component
 public class Sender {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
 
     final static String queueName = "actions";
 
@@ -39,20 +42,17 @@ public class Sender {
         return BindingBuilder.bind(queue).to(exchange).with(queueName);
     }
 
-    @Scheduled(cron = "0/10 * * * * *")
-    @HystrixCommand(fallbackMethod = "displayActions")
-    public void sendActions() {
+    @HystrixCommand(fallbackMethod = "defaultPublishAction")
+    public void publishAction(UUID uuid) {
         Action action = new Action(UUID.randomUUID().toString(), new Random().nextLong());
-        System.out.println("Sending message : " + action);
 
         rabbitTemplate.convertAndSend(queueName, action);
+        LOGGER.info("Sending message " + action);
     }
 
-    public void displayActions() {
-        Action action = new Action(UUID.randomUUID().toString(), Math.abs(new Random().nextLong()));
-        System.out.println("Save message locally : " + action);
-
-        actionRepository.save(action);
+    @HystrixCommand
+    public void defaultPublishAction(UUID uuid) {
+        LOGGER.warn("Fallback for action " + uuid.toString());
     }
 
 

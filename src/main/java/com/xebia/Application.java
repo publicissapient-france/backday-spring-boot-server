@@ -20,9 +20,6 @@ public class Application implements CommandLineRunner {
     }
 
     @Override
-    public void run(final String... args) throws Exception {
-        sender.sendActions();
+    public void run(String... args) throws Exception {
     }
-
-
 }
