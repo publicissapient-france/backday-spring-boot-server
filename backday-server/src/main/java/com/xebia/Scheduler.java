@@ -13,9 +13,9 @@ public class Scheduler {
     @Autowired
     Sender sender;
 
-    @Scheduled(cron = "0/20 * * * * *")
+    @Scheduled(fixedRate = 2000l)
     public void sendActions() {
-        Action action = new Action(UUID.randomUUID().toString(), new Random().nextLong());
+        Action action = new Action(UUID.randomUUID().toString(), new Random().nextInt(Integer.MAX_VALUE));
 
         sender.sendAction(action);
     }
