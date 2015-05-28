@@ -8,6 +8,9 @@ jar {
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-amqp")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.cloud:spring-cloud-starter-eureka:1.0.1.RELEASE")
     compile("org.springframework.cloud:spring-cloud-starter-hystrix:1.0.1.RELEASE")
     testCompile("junit:junit")

@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Xke-Spring-Boot-Buy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<b>Count buy : <span th:text="${count}"/></b>
+
+<ul th:each="buy : ${buys}">
+    Buy value <span th:text="${buy.value}"/> at <span th:text="${buy.date}"/>
+</ul>
+</body>
+</html>
