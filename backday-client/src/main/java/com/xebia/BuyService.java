@@ -10,11 +10,11 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class ActionService {
+public class BuyService {
     public static final Logger LOGGER = LoggerFactory.getLogger(Logger.class);
 
     @Autowired
-    ActionRepository actionRepository;
+    BuyRepository buyRepository;
 
     @HystrixCommand(fallbackMethod = "defaultBuy")
     public void buy(Action action) {
@@ -23,7 +23,7 @@ public class ActionService {
         buy.setValue(action.getValue());
         buy.setDate(new Date());
 
-        actionRepository.save(buy);
+        buyRepository.save(buy);
         LOGGER.info("Save action {}", buy);
     }
 
@@ -32,6 +32,6 @@ public class ActionService {
     }
 
     public List<Buy> findAll() {
-        return actionRepository.findAll();
+        return buyRepository.findAll();
     }
 }

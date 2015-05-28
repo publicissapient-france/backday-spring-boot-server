@@ -2,5 +2,5 @@ package com.xebia;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ActionRepository extends MongoRepository<Buy, String> {
+public interface BuyRepository extends MongoRepository<Buy, String> {
 }
