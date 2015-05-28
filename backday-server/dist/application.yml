@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: backday-server
+  rabbitmq:
+    host: bus
+  data:
+    mongodb:
+      host: db
+      database: backday-server
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://registry:8761/eureka/

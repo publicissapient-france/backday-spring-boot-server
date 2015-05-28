@@ -1,0 +1,28 @@
+client:
+  build: backday-client
+  links:
+   - db
+   - bus
+   - registry
+  ports:
+   - 8080
+
+server:
+  build: backday-server
+  links:
+   - db
+   - bus
+   - registry
+  ports:
+   - 8080
+
+registry:
+  build: service-registry
+  ports:
+   - 8761
+
+db:
+  image: mongo
+
+bus:
+  image: rabbitmq

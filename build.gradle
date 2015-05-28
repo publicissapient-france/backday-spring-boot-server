@@ -32,15 +32,22 @@ subprojects {
     }
 
     apply plugin: 'java'
-    apply plugin: 'eclipse'
     apply plugin: 'idea'
     apply plugin: 'spring-boot'
     apply plugin: 'io.spring.dependency-management'
+
     repositories {
         mavenCentral()
     }
 
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
+    springBoot {
+        requiresUnpack = [
+                "com.netflix.eureka:eureka-client",
+                "com.netflix.eureka:eureka-core"
+        ]
+    }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }
 
