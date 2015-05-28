@@ -13,8 +13,9 @@ public class ActionController {
     ActionRepository actionRepository;
 
     @RequestMapping(value="/action.html", method = RequestMethod.GET)
-    public Model getListActions(Model model) {
+    public Model getInfoActions(Model model) {
         model.addAttribute("actions", actionRepository.findAll());
+        model.addAttribute("count", actionRepository.count());
         return model;
     }
 }
