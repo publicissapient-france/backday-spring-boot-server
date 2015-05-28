@@ -30,7 +30,7 @@ public class Receiver {
     final static String queueName = "actions";
 
     @Autowired
-    private ActionService actionService;
+    private BuyService buyService;
 
     @Bean
     Queue queue() {
@@ -78,7 +78,7 @@ public class Receiver {
 
     public void handleMessage(Action action) {
         if (action.getValue() > 2000000000) {
-            actionService.buy(action);
+            buyService.buy(action);
         }
         latch.countDown();
     }
@@ -86,7 +86,7 @@ public class Receiver {
     private void displayWallet() {
         Marker marker = MarkerFactory.getMarker("DUMP");
         LOGGER.info(marker, "---");
-        for (Buy buy : actionService.findAll()) {
+        for (Buy buy : buyService.findAll()) {
             LOGGER.info(marker, buy.toString());
         }
         LOGGER.info(marker, "---");
