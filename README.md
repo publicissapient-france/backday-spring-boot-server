@@ -2,6 +2,6 @@ Backday Spring-boot sender
 ==========================
 
 ```
-./gradew clean assemble
- docker-compose build 
- docker-compose up -d
+./gradlew clean assemble
+docker-compose -p backday build
+docker-compose -p backday up -d
