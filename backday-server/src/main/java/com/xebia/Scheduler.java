@@ -13,7 +13,7 @@ public class Scheduler {
     @Autowired
     Sender sender;
 
-    @Scheduled(fixedRate = 2000l)
+    @Scheduled(fixedRate = 5000l)
     public void sendActions() {
         Action action = new Action(UUID.randomUUID().toString(), new Random().nextInt(Integer.MAX_VALUE));
 

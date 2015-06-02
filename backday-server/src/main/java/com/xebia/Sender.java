@@ -23,6 +23,7 @@ public class Sender {
         LOGGER.info("Sending message " + action);
     }
 
+    @HystrixCommand
     public void defaultSendAction(Action action) {
         LOGGER.warn("Fallback for action " + action);
         actionRepository.save(action);
